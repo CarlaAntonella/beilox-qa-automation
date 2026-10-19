@@ -1,0 +1,24 @@
+{
+  "name": "beilox-qa-automation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Beilox Senior QA Automation Challenge",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test tests/ui",
+    "test:api": "playwright test tests/api",
+    "test:headed": "playwright test --headed",
+    "test:report": "playwright show-report",
+    "typecheck": "tsc --noEmit",
+    "save:happy-path": "tsx scripts/save-happy-path.ts",
+    "check": "npm run typecheck && npm run test:api"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "@types/node": "^22.0.0",
+    "ajv": "^8.17.1",
+    "dotenv": "^16.4.7",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.3"
+  }
+}

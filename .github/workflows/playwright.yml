@@ -1,0 +1,45 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    # GitHub Actions uses UTC; 18:00 UTC = 15:00 Argentina (UTC-3).
+    - cron: '17 18 * * 1'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm install
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Type check
+        run: npm run typecheck
+      - name: Run API tests
+        run: npm run test:api
+      - name: Save and validate happy-path bodies
+        run: npm run save:happy-path
+      - name: Run UI tests
+        run: npm run test:ui
+      - name: Upload reports and JSON artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts
+          path: |
+            playwright-report/
+            test-results/
+            data/api-happy-path.json
+          if-no-files-found: warn

@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["message", "result"],
+  "properties": {
+    "result": {
+      "type": "object",
+      "required": ["properties", "description", "_id", "uid", "__v"],
+      "properties": {
+        "properties": { "type": "object" },
+        "description": { "type": "string" },
+        "_id": { "type": "string" },
+        "uid": { "type": "string" },
+        "__v": { "type": "integer" }
+      },
+      "additionalProperties": true
+    },
+    "message": { "type": "string" }
+  },
+  "additionalProperties": true
+}
